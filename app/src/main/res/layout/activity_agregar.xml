@@ -1,64 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#EDCBAD"
     tools:context=".activities.AgregarActivity">
+
+    <ImageView
+        android:layout_width="300sp"
+        android:layout_height="300sp"
+        android:layout_gravity="center"
+        android:scaleType="fitXY"
+        android:src="@drawable/hinata_commercial"
+        />
 
     <TextView
         android:id="@+id/tvJuego"
-        android:layout_width="wrap_content"
+        android:layout_width="200sp"
+        android:textAlignment="center"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
-        android:text="Ingrese el nombre del personaje:"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:textSize="22sp"
+        android:textColor="#CC5F32"
+        android:layout_gravity="center"
+        android:layout_margin="16sp"
+        android:text="@string/ingrese_el_nombre_del_personaje"
+        />
 
     <EditText
         android:id="@+id/etJuego"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:textSize="22sp"
+        android:textColor="@color/black"
+        android:layout_gravity="center"
+        android:layout_margin="16sp"
         android:ems="10"
-        android:inputType="textPersonName"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvJuego" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fabAgregar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@android:drawable/ic_menu_add" />
-
-
+        android:inputType="textPersonName" />
 
     <TextView
         android:id="@+id/tvEquipo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
-        android:text="Equipo"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/etJuego" />
+        android:layout_gravity="center"
+        android:textColor="#CC5F32"
+        android:textSize="22sp"
+        android:layout_margin="16sp"
+        android:text="@string/equipo"
+   />
 
     <Spinner
         android:id="@+id/spEquipo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tvEquipo" />
+        android:layout_gravity="center"
+        android:layout_margin="16sp" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAgregar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="24dp"
+        android:layout_gravity="right"
+        android:backgroundTint="#CC5F32"
+        app:tint="@color/white"
+        android:clickable="true"
+        app:srcCompat="@android:drawable/ic_menu_add" />
+
+</LinearLayout>

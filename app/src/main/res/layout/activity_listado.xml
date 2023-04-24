@@ -1,27 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#F1EFB7"
+    android:orientation="vertical"
     tools:context=".activities.ListadoActivity">
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        app:srcCompat="@android:drawable/ic_menu_add"
-        android:layout_margin="16dp" />
-
-    <!--    cambiar a recycler-->
-    <androidx.recyclerview.widget.RecyclerView
-        android:padding="6dp"
-        tools:listitem="@layout/row_juego"
-        android:id="@+id/recyclerView"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-    </androidx.recyclerview.widget.RecyclerView>
+        <ImageView
+            android:layout_width="400sp"
+            android:layout_height="200sp"
+            android:layout_gravity="center"
+            android:scaleType="centerCrop"
+            android:src="@drawable/list_commercial" />
 
-</FrameLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="16sp"
+            android:text="@string/tus_personajes"
+            android:textAlignment="center"
+            android:textColor="#91B36F"
+            android:textSize="40sp"
+            android:textStyle="bold" />
+
+        <!--    cambiar a recycler-->
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            tools:listitem="@layout/row_juego">
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:layout_margin="16dp"
+            app:backgroundTint="#9F8CD8"
+            app:srcCompat="@android:drawable/ic_menu_add" />
+    </LinearLayout>
+</ScrollView>

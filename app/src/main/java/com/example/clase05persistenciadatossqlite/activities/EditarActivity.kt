@@ -23,11 +23,12 @@ import com.google.android.material.snackbar.Snackbar
 
 class EditarActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private lateinit var bnGuardar: Button
-    private lateinit var etJuego: EditText
+    private lateinit var etNombre: EditText
     private lateinit var spEquipo: Spinner
-    private val equipos = arrayOf("Karasuno", "Nekoma", "Aoba Jōsai", "Shiratorizawa", "Inarizaki", "Fukurōdani")
+    private val equipos =
+        arrayOf("Karasuno", "Nekoma", "Aoba Jōsai", "Shiratorizawa", "Inarizaki", "Fukurōdani")
     private var equipoSeleccionado: String = ""
-    private lateinit var tvJuego: TextView
+    private lateinit var tvEquipo: TextView
     var personaje: Personaje? = null
     var id: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -44,7 +45,7 @@ class EditarActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun poblarCampos() {
-        etJuego.setText(personaje?.nombre)
+        etNombre.setText(personaje?.nombre)
         val position = equipos.indexOf(personaje?.equipo)
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, equipos)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
@@ -57,12 +58,12 @@ class EditarActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun inicializarVistas() {
-        etJuego = findViewById(R.id.etJuego)
+        etNombre = findViewById(R.id.etNombre)
         bnGuardar = findViewById(R.id.bnGuardar)
         spEquipo = findViewById(R.id.spEquipo)
-        tvJuego = findViewById(R.id.tvJuego)
+        tvEquipo = findViewById(R.id.tvEquipo)
         bnGuardar.setOnClickListener {
-            actualizarJuego(etJuego.text.toString(), equipoSeleccionado)
+            actualizarJuego(etNombre.text.toString(), equipoSeleccionado)
         }
     }
 
@@ -75,11 +76,11 @@ class EditarActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
             val contenido = ContentValues()
             contenido.put(columnaNombreJuego, nombreJuego)
             contenido.put(columnaEquipo, equipo)
-            if ( id > 0) {
+            if (id > 0) {
                 val argumentosWhere = arrayOf(id.toString())
                 val id_actualizado = baseDatos.actualizar(contenido, "id = ?", argumentosWhere)
                 if (id_actualizado > 0) {
-                    Snackbar.make(etJuego, "Juego actualizado", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(etNombre, "Juego actualizado", Snackbar.LENGTH_LONG).show()
                 } else {
                     val alerta = AlertDialog.Builder(this)
                     alerta.setTitle("Atención")

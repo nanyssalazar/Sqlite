@@ -22,29 +22,31 @@ import com.example.clase05persistenciadatossqlite.modelos.Personaje
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 
 class ListadoActivity : AppCompatActivity(), personajeInterface {
-
     private lateinit var recyclerView: RecyclerView
     private var listaDePersonajes = ArrayList<Personaje>()
     private lateinit var fab: FloatingActionButton
-    private val ORDENAR_POR_NOMBRE : String  = "nombre"
-    val columnas = arrayOf("id", "nombre", "equipo" )
+    private val ORDENAR_POR_NOMBRE: String = "nombre"
+    val columnas = arrayOf("id", "nombre", "equipo")
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_listado)
         inicializarVistas()
         asignarEventos()
     }
+
     override fun onResume() {
         super.onResume()
         traerMispersonajes()
     }
-    private fun inicializarVistas(){
+
+    private fun inicializarVistas() {
         recyclerView = findViewById(R.id.recyclerView)
         fab = findViewById(R.id.fab)
     }
 
-    private fun asignarEventos(){
-        fab.setOnClickListener{
+    private fun asignarEventos() {
+        fab.setOnClickListener {
             val intent = Intent(this, AgregarActivity::class.java)
             startActivity(intent)
         }
@@ -63,7 +65,7 @@ class ListadoActivity : AppCompatActivity(), personajeInterface {
             }
 
             override fun onQueryTextChange(p0: String?): Boolean {
-                if(TextUtils.isEmpty(p0)){
+                if (TextUtils.isEmpty(p0)) {
                     this.onQueryTextSubmit("");
                 }
                 return false
@@ -77,10 +79,10 @@ class ListadoActivity : AppCompatActivity(), personajeInterface {
 
     private fun traerMispersonajes() {
         // aqui poner log
-        Log.d("TRAER","trae personajes")
+        Log.d("TRAER", "trae personajes")
         val baseDatos = ManejadorBaseDatos(this)
         val cursor = baseDatos.traerTodos(columnas, ORDENAR_POR_NOMBRE)
-        recorrerResultados( cursor)
+        recorrerResultados(cursor)
         baseDatos.cerrarConexion()
     }
 
@@ -88,25 +90,26 @@ class ListadoActivity : AppCompatActivity(), personajeInterface {
     private fun buscarpersonaje(nombre: String) {
         val baseDatos = ManejadorBaseDatos(this)
         val camposATraer = arrayOf(nombre)
-        val cursor = baseDatos.seleccionar(columnas,"nombre like ?", camposATraer, ORDENAR_POR_NOMBRE)
-        recorrerResultados( cursor)
+        val cursor =
+            baseDatos.seleccionar(columnas, "nombre like ?", camposATraer, ORDENAR_POR_NOMBRE)
+        recorrerResultados(cursor)
         baseDatos.cerrarConexion()
     }
 
     @SuppressLint("Range")
-    fun recorrerResultados(cursor : Cursor){
-        if(listaDePersonajes.size > 0)
+    fun recorrerResultados(cursor: Cursor) {
+        if (listaDePersonajes.size > 0)
             listaDePersonajes.clear()
 
-        if(cursor.moveToFirst()){
-            do{
+        if (cursor.moveToFirst()) {
+            do {
                 val personaje_id = cursor.getInt(cursor.getColumnIndex("id"))
                 val nombre = cursor.getString(cursor.getColumnIndex("nombre"))
                 val equipo = cursor.getString(cursor.getColumnIndex("equipo"))
                 val personaje: Personaje
                 personaje = Personaje(personaje_id, nombre, equipo)
                 listaDePersonajes.add(personaje)
-            }while(cursor.moveToNext())
+            } while (cursor.moveToNext())
         }
 
         val linearLayoutManager = LinearLayoutManager(
@@ -115,23 +118,22 @@ class ListadoActivity : AppCompatActivity(), personajeInterface {
         )
 
         recyclerView.layoutManager = linearLayoutManager
-        // val adapter = PersonajesAdapter(this, listaDePersonajes,this)
-        val adapter = PersonajesAdapter(listaDePersonajes,  this, this)
+        val adapter = PersonajesAdapter(listaDePersonajes, this, this)
         recyclerView.adapter = adapter
 
     }
 
-     override fun personajeEliminado() {
+    override fun personajeEliminado() {
         Log.d("PRUEBAS", "personajeEliminado")
         traerMispersonajes()
     }
 
     override fun editarPersonaje(personaje: Personaje) {
-        Log.d("PRUEBAS", "editar personaje "+personaje.id)
+        Log.d("PRUEBAS", "editar personaje " + personaje.id)
         val intent = Intent(this, EditarActivity::class.java)
-        intent.putExtra("id",personaje.id)
-        intent.putExtra("nombre",personaje.nombre)
-        intent.putExtra("equipo",personaje.equipo)
+        intent.putExtra("id", personaje.id)
+        intent.putExtra("nombre", personaje.nombre)
+        intent.putExtra("equipo", personaje.equipo)
         startActivity(intent)
     }
 
