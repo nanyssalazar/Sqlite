@@ -18,18 +18,17 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import com.example.clase05persistenciadatossqlite.R
 import com.example.clase05persistenciadatossqlite.db.ManejadorBaseDatos
-import com.example.clase05persistenciadatossqlite.modelos.Juego
+import com.example.clase05persistenciadatossqlite.modelos.Personaje
 import com.google.android.material.snackbar.Snackbar
 
 class EditarActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     private lateinit var bnGuardar: Button
     private lateinit var etJuego: EditText
-    private lateinit var etPrecio: EditText
-    private lateinit var spConsola: Spinner
-    private val consolas = arrayOf("Xbox", "Nintendo", "Playstation", "MultiPlataforma", "P.C")
-    private var consolaSeleccionada: String = ""
+    private lateinit var spEquipo: Spinner
+    private val equipos = arrayOf("Karasuno", "Nekoma", "Aoba Jōsai", "Shiratorizawa", "Inarizaki", "Fukurōdani")
+    private var equipoSeleccionado: String = ""
     private lateinit var tvJuego: TextView
-    var juego: Juego? = null
+    var personaje: Personaje? = null
     var id: Int = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,43 +44,37 @@ class EditarActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     private fun poblarCampos() {
-        etJuego.setText(juego?.nombre)
-        etPrecio.setText(juego?.precio.toString())
-        val position = consolas.indexOf(juego?.consola)
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, consolas)
+        etJuego.setText(personaje?.nombre)
+        val position = equipos.indexOf(personaje?.equipo)
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, equipos)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        spConsola.adapter = adapter
-        spConsola.onItemSelectedListener = this
+        spEquipo.adapter = adapter
+        spEquipo.onItemSelectedListener = this
         if (position >= 0) {
-            spConsola.setSelection(position)
-            consolaSeleccionada = consolas[position]
+            spEquipo.setSelection(position)
+            equipoSeleccionado = equipos[position]
         }
     }
 
     private fun inicializarVistas() {
         etJuego = findViewById(R.id.etJuego)
         bnGuardar = findViewById(R.id.bnGuardar)
-        etPrecio = findViewById(R.id.etPrecio)
-        spConsola = findViewById(R.id.spConsola)
+        spEquipo = findViewById(R.id.spEquipo)
         tvJuego = findViewById(R.id.tvJuego)
         bnGuardar.setOnClickListener {
-            var precio_actual: Float
-            precio_actual = etPrecio.text.toString().toFloat()
-            actualizarJuego(etJuego.text.toString(), precio_actual, consolaSeleccionada)
+            actualizarJuego(etJuego.text.toString(), equipoSeleccionado)
         }
     }
 
     val columnaNombreJuego = "nombre"
-    val columnaPrecio = "precio"
-    val columnaConsola = "consola"
+    val columnaEquipo = "equipo"
 
-    private fun actualizarJuego(nombreJuego: String, precio: Float, consola: String) {
-        if (!TextUtils.isEmpty(consola)) {
+    private fun actualizarJuego(nombreJuego: String, equipo: String) {
+        if (!TextUtils.isEmpty(equipo)) {
             val baseDatos = ManejadorBaseDatos(this)
             val contenido = ContentValues()
             contenido.put(columnaNombreJuego, nombreJuego)
-            contenido.put(columnaPrecio, precio)
-            contenido.put(columnaConsola, consola)
+            contenido.put(columnaEquipo, equipo)
             if ( id > 0) {
                 val argumentosWhere = arrayOf(id.toString())
                 val id_actualizado = baseDatos.actualizar(contenido, "id = ?", argumentosWhere)
@@ -116,7 +109,7 @@ class EditarActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
         if (idJuego > 0) {
             val baseDatos = ManejadorBaseDatos(this)
-            val columnasATraer = arrayOf("id", "nombre", "precio", "consola")
+            val columnasATraer = arrayOf("id", "nombre", "equipo")
             val condicion = " id = ?"
             val argumentos = arrayOf(idJuego.toString())
             val ordenarPor = "id"
@@ -124,11 +117,10 @@ class EditarActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
 
             if (cursor.moveToFirst()) {
                 do {
-                    val juego_id = cursor.getInt(cursor.getColumnIndex("id"))
+                    val personaje_id = cursor.getInt(cursor.getColumnIndex("id"))
                     val nombre = cursor.getString(cursor.getColumnIndex("nombre"))
-                    val precio = cursor.getFloat(cursor.getColumnIndex("precio"))
-                    val consola = cursor.getString(cursor.getColumnIndex("consola"))
-                    juego = Juego(juego_id, nombre, precio, consola)
+                    val equipo = cursor.getString(cursor.getColumnIndex("equipo"))
+                    personaje = Personaje(personaje_id, nombre, equipo)
                 } while (cursor.moveToNext())
             }
             baseDatos.cerrarConexion()
@@ -136,7 +128,7 @@ class EditarActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     override fun onItemSelected(p0: AdapterView<*>?, p1: View?, position: Int, p3: Long) {
-        consolaSeleccionada = consolas[position]
+        equipoSeleccionado = equipos[position]
     }
 
     override fun onNothingSelected(p0: AdapterView<*>?) {
