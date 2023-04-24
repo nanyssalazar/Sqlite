@@ -37,7 +37,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="16dp"
-            tools:listitem="@layout/row_juego">
+            tools:listitem="@layout/row_personaje">
 
         </androidx.recyclerview.widget.RecyclerView>
 

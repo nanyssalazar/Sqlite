@@ -17,7 +17,7 @@
         />
 
     <TextView
-        android:id="@+id/tvJuego"
+        android:id="@+id/tvPersonaje"
         android:layout_width="200sp"
         android:textAlignment="center"
         android:layout_height="wrap_content"
@@ -29,7 +29,7 @@
         />
 
     <EditText
-        android:id="@+id/etJuego"
+        android:id="@+id/etNombre"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="22sp"

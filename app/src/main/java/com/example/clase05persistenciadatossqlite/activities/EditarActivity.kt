@@ -40,7 +40,7 @@ class EditarActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true);
         inicializarVistas()
         id = intent.getIntExtra("id", 0)
-        buscarJuego(id)
+        buscarPersonaje(id)
         poblarCampos()
     }
 
@@ -63,24 +63,24 @@ class EditarActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
         spEquipo = findViewById(R.id.spEquipo)
         tvEquipo = findViewById(R.id.tvEquipo)
         bnGuardar.setOnClickListener {
-            actualizarJuego(etNombre.text.toString(), equipoSeleccionado)
+            actualizarPersonaje(etNombre.text.toString(), equipoSeleccionado)
         }
     }
 
-    val columnaNombreJuego = "nombre"
+    val columnaNombrePersonaje = "nombre"
     val columnaEquipo = "equipo"
 
-    private fun actualizarJuego(nombreJuego: String, equipo: String) {
+    private fun actualizarPersonaje(nombrePersonaje: String, equipo: String) {
         if (!TextUtils.isEmpty(equipo)) {
             val baseDatos = ManejadorBaseDatos(this)
             val contenido = ContentValues()
-            contenido.put(columnaNombreJuego, nombreJuego)
+            contenido.put(columnaNombrePersonaje, nombrePersonaje)
             contenido.put(columnaEquipo, equipo)
             if (id > 0) {
                 val argumentosWhere = arrayOf(id.toString())
                 val id_actualizado = baseDatos.actualizar(contenido, "id = ?", argumentosWhere)
                 if (id_actualizado > 0) {
-                    Snackbar.make(etNombre, "Juego actualizado", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(etNombre, "Personaje actualizado", Snackbar.LENGTH_LONG).show()
                 } else {
                     val alerta = AlertDialog.Builder(this)
                     alerta.setTitle("Atención")
@@ -106,13 +106,13 @@ class EditarActivity : AppCompatActivity(), AdapterView.OnItemSelectedListener {
     }
 
     @SuppressLint("Range")
-    private fun buscarJuego(idJuego: Int) {
+    private fun buscarPersonaje(idPersonaje: Int) {
 
-        if (idJuego > 0) {
+        if (idPersonaje > 0) {
             val baseDatos = ManejadorBaseDatos(this)
             val columnasATraer = arrayOf("id", "nombre", "equipo")
             val condicion = " id = ?"
-            val argumentos = arrayOf(idJuego.toString())
+            val argumentos = arrayOf(idPersonaje.toString())
             val ordenarPor = "id"
             val cursor = baseDatos.seleccionar(columnasATraer, condicion, argumentos, ordenarPor)
 

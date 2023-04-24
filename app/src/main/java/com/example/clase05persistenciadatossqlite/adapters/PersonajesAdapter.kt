@@ -44,7 +44,7 @@ class PersonajesAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ContenedorDeVista {
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.row_juego, parent, false)
+            .inflate(R.layout.row_personaje, parent, false)
 
         return ContenedorDeVista(view)
     }
